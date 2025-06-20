@@ -1,0 +1,175 @@
+@import './base.css';
+
+/* 全局样式 */
+body {
+  font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, 'Microsoft YaHei', Arial, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f7fa;
+  line-height: 1.6;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: #409EFF;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #66b1ff;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 辅助类 */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-primary {
+  color: #409EFF;
+}
+
+.text-success {
+  color: #67C23A;
+}
+
+.text-warning {
+  color: #E6A23C;
+}
+
+.text-danger {
+  color: #F56C6C;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-5 {
+  margin-bottom: 3rem;
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+.mt-5 {
+  margin-top: 3rem;
+}
+
+/* 自定义全局覆盖样式 */
+.el-button--primary {
+  background-color: #409EFF;
+  border-color: #409EFF;
+}
+
+.el-button--primary:hover, .el-button--primary:focus {
+  background-color: #66b1ff;
+  border-color: #66b1ff;
+}
+
+/* 响应式容器 */
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+/* 页面过渡动画 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* 移除有冲突的 #app 样式 */

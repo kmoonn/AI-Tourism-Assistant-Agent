@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上海旅行攻略</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ffb300;
+            --primary-light: #ffe082;
+            --primary-dark: #ff8f00;
+            --text-color: #424242;
+            --text-light: #757575;
+            --bg-color: #fffde7;
+            --card-color: #ffffff;
+            --accent-color: #ff6f00;
+            --border-color: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+                padding: 0;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            .page-break {
+                page-break-after: always;
+            }
+        }
+        
+        .container {
+            max-width: 210mm;
+            margin: 0 auto;
+            background-color: var(--card-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .summary {
+            background-color: var(--primary-light);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .summary-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .summary-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--primary-dark);
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 25px 0 15px;
+            color: var(--primary-dark);
+        }
+        
+        .day-card {
+            background-color: var(--card-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .day-title {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+        
+        .day-date {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--primary-light);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -40px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            border: 3px solid var(--card-color);
+        }
+        
+        .timeline-time {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 5px;
+        }
+        
+        .timeline-title {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-content {
+            color: var(--text-light);
+        }
+        
+        .timeline-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+        }
+        
+        .info-icon {
+            margin-right: 5px;
+            color: var(--primary-dark);
+        }
+        
+        .tips {
+            background-color: var(--primary-light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .tips h3 {
+            color: var(--primary-dark);
+            margin-top: 0;
+        }
+        
+        .tips-list {
+            list-style-type: none;
+        }
+        
+        .tips-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .tips-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--primary-dark);
+        }
+        
+        .checklist {
+            list-style-type: none;
+            columns: 2;
+            column-gap: 30px;
+        }
+        
+        .checklist li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+            break-inside: avoid;
+        }
+        
+        .checklist li::before {
+            content: '\f14a';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 400;
+            position: absolute;
+            left: 0;
+            color: var(--primary-dark);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .print-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .print-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .print-btn i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>上海旅行攻略</h1>
+            <p class="subtitle">3天精彩之旅 | 2023年6月20日 - 6月22日</p>
+        </header>
+        
+        <div class="content">
+            <section class="summary">
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="summary-text">
+                            <strong>行程天数</strong>
+                            <div>3天2晚</div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div class="summary-icon"><i class="fas fa-cloud-sun"></i></div>
+                        <div class="summary-text">
+                            <strong>天气情况</strong>
+                            <div>晴朗，25-30°C</div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div class="summary-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="summary-text">
+                            <strong>目的地</strong>
+                            <div>上海</div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-item">
+                        <div class="summary-icon"><i class="fas fa-heart"></i></div>
+                        <div class="summary-text">
+                            <strong>旅行风格</strong>
+                            <div>美食、购物、文化</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>行程概览</h2>
+                
+                <div class="day-card">
+                    <div class="day-header">
+                        <h3 class="day-title">第1天</h3>
+                        <div class="day-date">2023年6月20日 (星期一)</div>
+                    </div>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-time">09:00 - 11:30</div>
+                            <h4 class="timeline-title">游览豫园</h4>
+                            <div class="timeline-content">
+                                <p>豫园始建于1559年，是明代著名的私家园林。园内亭台楼阁、假山池沼，集江南古典园林之大成。</p>
+                                <div class="timeline-info">
+                                    <div class="info-item"><i class="fas fa-ticket-alt info-icon"></i> 门票：40元</div>
+                                    <div class="info-item"><i class="fas fa-clock info-icon"></i> 建议游览时间：2.5小时</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">11:30 - 13:00</div>
+                            <h4 class="timeline-title">南翔小笼午餐</h4>
+                            <div class="timeline-content">
+                                <p>在豫园商城的南翔馒头店品尝正宗的上海小笼包，这里的小笼包皮薄馅多、汤汁丰富。</p>
+                                <div class="timeline-info">
+                                    <div class="info-item"><i class="fas fa-money-bill-wave info-icon"></i> 人均：50-80元</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">13:30 - 16:00</div>
+                            <h4 class="timeline-title">上海博物馆</h4>
+                            <div class="timeline-content">
+                                <p>上海博物馆是中国首屈一指的古代艺术博物馆，收藏了大量的中国古代艺术珍品。</p>
+                                <div class="timeline-info">
+                                    <div class="info-item"><i class="fas fa-ticket-alt info-icon"></i> 门票：免费（需预约）</div>
+                                    <div class="info-item"><i class="fas fa-clock info-icon"></i> 建议游览时间：2.5小时</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">16:30 - 18:30</div>
+                            <h4 class="timeline-title">南京路步行街</h4>
+                            <div class="timeline-content">
+                                <p>南京路是上海最著名、最繁华的商业街之一，有着"中华商业第一街"的美誉。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">19:00 - 21:00</div>
+                            <h4 class="timeline-title">外滩夜景</h4>
+                            <div class="timeline-content">
+                                <p>漫步外滩，欣赏浦江两岸的灯光秀。黄浦江西岸的万国建筑博览群与东岸的现代化摩天大楼交相辉映。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="day-card">
+                    <div class="day-header">
+                        <h3 class="day-title">第2天</h3>
+                        <div class="day-date">2023年6月21日 (星期二)</div>
+                    </div>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-time">09:00 - 12:00</div>
+                            <h4 class="timeline-title">上海迪士尼乐园</h4>
+                            <div class="timeline-content">
+                                <p>上海迪士尼乐园是中国内地首座迪士尼主题乐园，拥有七大主题园区和众多精彩演出。</p>
+                                <div class="timeline-info">
+                                    <div class="info-item"><i class="fas fa-ticket-alt info-icon"></i> 门票：399-699元</div>
+                                    <div class="info-item"><i class="fas fa-clock info-icon"></i> 建议游览时间：全天</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">12:00 - 13:00</div>
+                            <h4 class="timeline-title">园内午餐</h4>
+                            <div class="timeline-content">
+                                <p>在迪士尼乐园内的餐厅享用午餐，可选择米奇主题餐厅或其他特色餐厅。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">13:00 - 20:00</div>
+                            <h4 class="timeline-title">继续游玩迪士尼</h4>
+                            <div class="timeline-content">
+                                <p>体验更多游乐项目，观看花车巡游和烟花表演。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="day-card">
+                    <div class="day-header">
+                        <h3 class="day-title">第3天</h3>
+                        <div class="day-date">2023年6月22日 (星期三)</div>
+                    </div>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-time">09:00 - 11:00</div>
+                            <h4 class="timeline-title">田子坊</h4>
+                            <div class="timeline-content">
+                                <p>田子坊是上海石库门建筑的典范，现在已经发展成为集艺术、时尚、餐饮于一体的文艺创意区。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">11:30 - 13:00</div>
+                            <h4 class="timeline-title">新天地午餐</h4>
+                            <div class="timeline-content">
+                                <p>在新天地品尝上海本地美食或国际料理，这里有各种高品质餐厅可供选择。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">13:30 - 16:00</div>
+                            <h4 class="timeline-title">东方明珠电视塔</h4>
+                            <div class="timeline-content">
+                                <p>登上东方明珠电视塔，从空中俯瞰上海全景。塔内还设有上海城市历史发展陈列馆。</p>
+                                <div class="timeline-info">
+                                    <div class="info-item"><i class="fas fa-ticket-alt info-icon"></i> 门票：160-220元</div>
+                                    <div class="info-item"><i class="fas fa-clock info-icon"></i> 建议游览时间：2-3小时</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">16:30 - 19:00</div>
+                            <h4 class="timeline-title">上海环球金融中心</h4>
+                            <div class="timeline-content">
+                                <p>参观上海环球金融中心观光厅，这里被称为"空中走廊"，是观赏上海城市风光的绝佳地点。</p>
+                                <div class="timeline-info">
+                                    <div class="info-item"><i class="fas fa-ticket-alt info-icon"></i> 门票：120-150元</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>旅行提示</h2>
+                
+                <div class="tips">
+                    <h3>天气与穿着</h3>
+                    <ul class="tips-list">
+                        <li>6月上海天气较热，气温在25-30°C之间，建议穿着轻薄透气的衣物。</li>
+                        <li>可能有阵雨，请携带便携雨伞或雨衣。</li>
+                        <li>参观室内景点如博物馆时，注意温差，可携带薄外套。</li>
+                        <li>迪士尼游玩全天，请穿着舒适的鞋子，并做好防晒措施。</li>
+                    </ul>
+                </div>
+                
+                <div class="tips">
+                    <h3>交通建议</h3>
+                    <ul class="tips-list">
+                        <li>上海地铁网络发达，建议购买交通卡或使用手机支付。</li>
+                        <li>从市区前往迪士尼乐园可乘坐11号线直达。</li>
+                        <li>外滩和南京路区域游客较多，高峰时段可考虑步行或打车。</li>
+                        <li>前往浦东区域可乘坐地铁2号线或乘坐轮渡过江，轮渡更有特色体验。</li>
+                    </ul>
+                </div>
+                
+                <div class="tips">
+                    <h3>美食推荐</h3>
+                    <ul class="tips-list">
+                        <li>南翔小笼包：皮薄馅多，汤汁丰富</li>
+                        <li>生煎包：底部金黄酥脆，顶部柔软多汁</li>
+                        <li>葱油拌面：简单但风味独特的上海面食</li>
+                        <li>红烧肉：香甜软糯，肥而不腻</li>
+                        <li>蟹粉狮子头：鲜香可口的上海名菜</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>行前准备清单</h2>
+                
+                <ul class="checklist">
+                    <li>身份证/护照</li>
+                    <li>现金和银行卡</li>
+                    <li>手机和充电器</li>
+                    <li>景点预约确认</li>
+                    <li>舒适的步行鞋</li>
+                    <li>防晒用品</li>
+                    <li>便携雨伞</li>
+                    <li>常用药品</li>
+                    <li>相机/手机</li>
+                    <li>水杯</li>
+                    <li>口罩</li>
+                    <li>纸巾/湿巾</li>
+                </ul>
+            </section>
+        </div>
+        
+        <footer>
+            <p>本旅行攻略由AI旅游助手生成 | 出行前请再次确认各景点开放情况</p>
+        </footer>
+    </div>
+    
+    <button class="print-btn no-print" onclick="window.print()">
+        <i class="fas fa-print"></i> 打印攻略
+    </button>
+</body>
+</html> 
