@@ -59,11 +59,11 @@ public class WeatherFunctionResponse {
     @JsonPropertyDescription("能见度（公里）")
     private String vis;
 
-    @JsonProperty(required = false, value = "cloud")
+    @JsonProperty(value = "cloud")
     @JsonPropertyDescription("云量（%），可能为空")
     private String cloud;
 
-    @JsonProperty(required = false, value = "dew")
+    @JsonProperty(value = "dew")
     @JsonPropertyDescription("露点温度，可能为空")
     private String dew;
 

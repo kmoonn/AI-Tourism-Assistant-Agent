@@ -3,38 +3,20 @@
     <div class="container">
       <div class="logo">
         <router-link to="/">
-          <img :src="logoSrc" alt="旅游助手" />
+          <img src="../assets/logo.svg" alt="旅游助手" />
         </router-link>
       </div>
       <nav class="main-nav">
         <router-link to="/" class="nav-item">首页</router-link>
-        <router-link to="/discover" class="nav-item">发现旅游景点</router-link>
-        <router-link to="/plan" class="nav-item">游攻略</router-link>
+        <router-link to="/discover" class="nav-item">发现</router-link>
+        <router-link to="/plan" class="nav-item">攻略</router-link>
       </nav>
-      <div class="user-actions">
-        <el-dropdown trigger="click">
-          <span class="lang-selector">
-            中文简体 <el-icon><arrow-down /></el-icon>
-          </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item>中文简体</el-dropdown-item>
-              <el-dropdown-item>English</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-        <router-link to="/login" class="login-btn">登录/注册</router-link>
+      <div class="user-actions">        
+        <router-link to="/login" class="login-btn">登录 / 注册</router-link>
       </div>
     </div>
   </header>
 </template>
-
-<script setup>
-import { ArrowDown } from '@element-plus/icons-vue'
-import { logoBase64 } from '../assets/images/logo.js'
-
-const logoSrc = logoBase64
-</script>
 
 <style scoped>
 .app-header {

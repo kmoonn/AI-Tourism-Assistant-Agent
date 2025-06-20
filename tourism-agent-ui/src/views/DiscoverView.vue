@@ -128,7 +128,7 @@
         <el-pagination
           background
           layout="prev, pager, next"
-          :total="100"
+          :total="50"
           :current-page="currentPage"
           @current-change="handlePageChange"
         />
@@ -197,30 +197,6 @@ const destinations = ref([
 const attractions = ref([
   {
     id: 1,
-    name: '富士山',
-    location: '日本 静冈县',
-    category: '自然风光',
-    description: '日本的象征和最高峰，被誉为"日本第一山"，是世界文化遗产。四季景色各异，春樱秋枫，冬雪夏绿。',
-    image: 'https://images.unsplash.com/photo-1578637387939-43c525550085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-    rating: 4.8,
-    reviewCount: 5268,
-    price: 300,
-    features: ['摄影胜地', '户外活动', '世界遗产']
-  },
-  {
-    id: 2,
-    name: '大阪环球影城',
-    location: '日本 大阪',
-    category: '主题公园',
-    description: '日本人气主题公园，拥有多个电影主题园区，包括哈利波特魔法世界、超级任天堂世界等。提供刺激的游乐设施和精彩的表演。',
-    image: 'https://images.unsplash.com/photo-1551394505-8783c2f1ac91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-    rating: 4.6,
-    reviewCount: 7654,
-    price: 580,
-    features: ['适合家庭', '热门景点', '娱乐']
-  },
-  {
-    id: 3,
     name: '长城',
     location: '中国 北京',
     category: '历史古迹',
@@ -230,6 +206,18 @@ const attractions = ref([
     reviewCount: 12547,
     price: 150,
     features: ['世界遗产', '户外活动', '历史文化']
+  },
+  {
+    id: 2,
+    name: '富士山',
+    location: '日本 静冈县',
+    category: '自然风光',
+    description: '日本的象征和最高峰，被誉为"日本第一山"，是世界文化遗产。四季景色各异，春樱秋枫，冬雪夏绿。',
+    image: 'https://images.unsplash.com/photo-1578637387939-43c525550085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    rating: 4.8,
+    reviewCount: 5268,
+    price: 300,
+    features: ['摄影胜地', '户外活动', '世界遗产']
   }
 ])
 </script>

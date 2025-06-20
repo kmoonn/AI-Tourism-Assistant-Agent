@@ -5,22 +5,11 @@
     <div class="hero-section">
       <div class="container">
         <div class="hero-content">
-          <h1 class="main-title">游攻略</h1>
+          <h1 class="main-title">旅游行程规划智能体</h1>
           <h2 class="subtitle">AI 帮你制作旅行攻略</h2>
           
           <div class="date-picker-container">
-            <el-date-picker
-              v-model="travelDateRange"
-              type="daterange"
-              range-separator=" - "
-              start-placeholder="旅程开始日期"
-              end-placeholder="旅程结束日期"
-              format="YYYY/MM/DD"
-              value-format="YYYY-MM-DD"
-              :clearable="false"
-              :disabled-date="disablePastDates"
-            />
-            <el-button type="primary" class="plan-btn" @click="createPlan">现在登录</el-button>
+            <el-button type="primary" class="plan-btn" @click="createPlan">快速开始</el-button>
           </div>
         </div>
       </div>
@@ -28,7 +17,7 @@
     
     <div class="features-section">
       <div class="container">
-        <h2 class="section-title">旅游助手功能</h2>
+        <h2 class="section-title">核心功能</h2>
         
         <div class="features-grid">
           <div class="feature-card">
@@ -87,23 +76,12 @@
 import { ref } from 'vue'
 import { Calendar, Location, Food, Suitcase } from '@element-plus/icons-vue'
 import AppHeader from '../components/AppHeader.vue'
-import dayjs from 'dayjs'
-
-// 旅行日期选择
-const travelDateRange = ref([
-  dayjs().format('YYYY-MM-DD'),
-  dayjs().add(7, 'day').format('YYYY-MM-DD')
-])
-
-// 禁用过去的日期
-const disablePastDates = (date) => {
-  return date < dayjs().startOf('day')
-}
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 // 创建旅行计划
 const createPlan = () => {
-  console.log('创建旅行计划，日期范围:', travelDateRange.value)
-  // 实际应用中这里会导航到登录页或计划页
+  router.push('/plan')
 }
 
 // 探索目的地
@@ -131,24 +109,6 @@ const popularDestinations = ref([
     name: '香港',
     description: '东方之珠，购物天堂与美食之都',
     image: 'https://images.unsplash.com/photo-1506970845246-18f21d533b20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
-  },
-  {
-    id: 4,
-    name: '成都',
-    description: '休闲生活与美食之都，大熊猫的故乡',
-    image: 'https://images.unsplash.com/photo-1558877316-c21513ac40d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
-  },
-  {
-    id: 5,
-    name: '西安',
-    description: '古都风采，探索中国历史文化',
-    image: 'https://images.unsplash.com/photo-1567358080869-dcbd6d0f4321?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1474&q=80'
-  },
-  {
-    id: 6,
-    name: '三亚',
-    description: '热带海滨天堂，阳光沙滩与蓝色海洋',
-    image: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
   }
 ])
 </script>

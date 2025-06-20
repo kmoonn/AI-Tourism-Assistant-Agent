@@ -1,5 +1,4 @@
 <script setup>
-// 不需要导入未使用的组件
 </script>
 
 <template>

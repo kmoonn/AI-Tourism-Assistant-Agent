@@ -4,8 +4,8 @@
     
     <div class="plan-hero">
       <div class="container">
-        <h1 class="page-title">AI 帮你制作旅行攻略</h1>
-        <p class="page-subtitle">输入旅行信息，让AI为您定制完美行程</p>
+        <h1 class="page-title">AI 智能体帮你制作旅行攻略</h1>
+        <p class="page-subtitle">输入您的旅行计划，让AI为您定制完美行程</p>
       </div>
     </div>
     
@@ -75,9 +75,12 @@
         <el-card class="plan-result-card">
           <template #header>
             <div class="card-header">
-              <h2>{{ tripForm.destination }}旅行攻略</h2>
+              <h2>您的旅行攻略已生成，请查收~</h2>
+              <br>
               <span class="trip-duration">{{ formatDateRange }}</span>
             </div>
+            <span style="color: #999;"> 由于MCP不稳定以及ApiKey限制，仅显示示例数据。<br>
+              如需查看完整攻略，请点击"在新标签页打开"。</span>
           </template>
           
           <travel-plan-viewer
@@ -158,55 +161,63 @@ const generatePlan = async () => {
   planHtmlContent.value = ''
   planError.value = ''
   
+  console.log('开始生成旅行计划，showPlanResult:', showPlanResult.value)
+  
   try {
-    // 准备参数
-    const destination = tripForm.value.destination
-    const travelDates = `${dayjs(tripForm.value.dateRange[0]).format('YYYY年MM月DD日')} 至 ${dayjs(tripForm.value.dateRange[1]).format('YYYY年MM月DD日')}`
-    const preferences = tripForm.value.travelStyle.join('、') + (tripForm.value.specialRequests ? '、' + tripForm.value.specialRequests : '')
-    
-    // 开发环境：直接获取预设的HTML内容
-    if (import.meta.env.DEV) {
-      try {
-        const html = await getTravelHtml()
-        planHtmlContent.value = html
-        isGenerating.value = false
-      } catch (error) {
-        planError.value = error.message || '获取旅游规划失败，请重试'
-        isGenerating.value = false
-      }
-      return
+    // 首先尝试调用API生成旅游规划
+    try {
+      await generateTravelPlan(tripForm.value.destination, `${dayjs(tripForm.value.dateRange[0]).format('YYYY年MM月DD日')} 至 ${dayjs(tripForm.value.dateRange[1]).format('YYYY年MM月DD日')}`, tripForm.value.travelStyle.join('、') + (tripForm.value.specialRequests ? '、' + tripForm.value.specialRequests : ''))
+      console.log('旅游规划API调用成功')
+    } catch (apiError) {
+      console.warn('API调用失败，将使用本地示例文件:', apiError)
     }
     
-    // 生产环境：调用API生成旅游规划
-    await generateTravelPlan(destination, travelDates, preferences)
-    
-    // 轮询获取生成的HTML文件，最多尝试10次
-    let retries = 0
-    const maxRetries = 10
-    const interval = 10000 // 10秒检查一次
-    
-    const checkHtml = async () => {
-      try {
-        const html = await getTravelHtml()
-        planHtmlContent.value = html
-        isGenerating.value = false
-        clearInterval(checkInterval)
-      } catch (error) {
-        retries++
-        if (retries >= maxRetries) {
-          planError.value = '获取旅游规划超时，请重试'
-          isGenerating.value = false
-          clearInterval(checkInterval)
-        }
+    // 无论API调用成功与否，都尝试获取HTML内容
+    try {
+      // 尝试获取HTML内容
+      const html = await getTravelHtml()
+      console.log('获取到的HTML内容:', html.substring(0, 100) + '...')
+      
+      // 如果获取失败或内容为空，使用硬编码的HTML
+      if (!html || html.trim() === '') {
+        console.log('获取的HTML为空，使用硬编码的HTML');
+        planHtmlContent.value = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>上海旅行攻略</title>
+          <style>
+            body { font-family: 'Microsoft YaHei', sans-serif; }
+            .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+            h1 { color: #409EFF; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1>上海旅行攻略</h1>
+            <p>这是一个测试用的旅行攻略HTML内容</p>
+            <h2>行程安排</h2>
+            <ul>
+              <li>第一天：外滩、南京路</li>
+              <li>第二天：迪士尼乐园</li>
+              <li>第三天：田子坊、豫园</li>
+            </ul>
+          </div>
+        </body>
+        </html>
+        `;
+      } else {
+        planHtmlContent.value = html;
       }
+      
+      isGenerating.value = false
+      console.log('设置完HTML内容，showPlanResult:', showPlanResult.value, '内容长度:', planHtmlContent.value.length)
+    } catch (error) {
+      console.error('获取HTML内容失败:', error)
+      planError.value = error.message || '获取旅游规划失败，请重试'
+      isGenerating.value = false
     }
-    
-    // 开始轮询
-    const checkInterval = setInterval(checkHtml, interval)
-    
-    // 立即执行一次检查
-    await checkHtml()
-    
   } catch (error) {
     console.error('生成旅游规划失败:', error)
     planError.value = error.message || '生成旅游规划失败，请重试'

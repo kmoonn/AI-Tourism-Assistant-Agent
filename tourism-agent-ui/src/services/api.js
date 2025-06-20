@@ -37,59 +37,67 @@ export async function generateTravelPlan(destination, travelDates, preferences) 
 // 获取生成的HTML文件内容
 export async function getTravelHtml() {
   try {
-    // 开发环境使用本地示例文件
-    if (import.meta.env.DEV) {
-      // 使用fetch直接获取public目录下的文件
-      const response = await fetch('/travel.html');
-      if (!response.ok) {
-        throw new Error('获取旅游规划HTML失败');
-      }
-      return await response.text();
-    } else {
-      // 生产环境从后端获取
-      const response = await fetch('/travel.html');
-      if (!response.ok) {
-        throw new Error('获取旅游规划HTML失败');
-      }
-      return await response.text();
+    // 尝试从后端获取
+    const response = await fetch('/travel.html');
+    console.log('fetch响应状态:', response.status, response.statusText);
+    if (!response.ok) {
+      throw new Error(`获取旅游规划HTML失败: ${response.status} ${response.statusText}`);
     }
+    const htmlText = await response.text();
+    console.log('成功获取HTML内容，长度:', htmlText.length);
+    return htmlText;
   } catch (error) {
-    // 如果获取失败，使用默认内容
-    console.error('获取旅游规划HTML失败，使用备用内容:', error);
+    // 如果获取失败，记录错误
+    console.error('获取旅游规划HTML失败，详细错误:', error);
     
-    // 返回一个简单的错误提示HTML
-    return `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="UTF-8">
-      <title>加载失败</title>
-      <style>
-        body { font-family: 'Microsoft YaHei', sans-serif; text-align: center; padding: 50px; }
-        .error-container { max-width: 600px; margin: 0 auto; }
-        h1 { color: #f56c6c; }
-        p { font-size: 16px; line-height: 1.6; }
-        .retry-btn { 
-          background-color: #409eff; 
-          color: white; 
-          border: none; 
-          padding: 10px 20px; 
-          border-radius: 4px; 
-          cursor: pointer; 
-          font-size: 16px; 
-          margin-top: 20px;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="error-container">
-        <h1>旅游规划加载失败</h1>
-        <p>很抱歉，无法加载旅游规划内容。这可能是因为后端服务未启动或网络连接问题。</p>
-        <p>您可以尝试刷新页面或稍后再试。</p>
-        <button class="retry-btn" onclick="window.location.reload()">重试</button>
-      </div>
-    </body>
-    </html>
-    `;
+    // 无论是开发环境还是生产环境，都尝试获取本地示例文件
+    console.log('尝试获取本地travel.html示例文件');
+    try {
+      // 使用fetch直接获取public目录下的文件
+      const localResponse = await fetch('/travel.html');
+      if (!localResponse.ok) {
+        throw new Error(`获取本地示例HTML失败: ${localResponse.status} ${localResponse.statusText}`);
+      }
+      const localHtmlText = await localResponse.text();
+      console.log('成功获取本地示例HTML内容，长度:', localHtmlText.length);
+      return localHtmlText;
+    } catch (localError) {
+      console.error('获取本地示例HTML也失败:', localError);
+      
+      // 如果本地示例也获取失败，返回一个简单的错误提示HTML
+      return `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>加载失败</title>
+        <style>
+          body { font-family: 'Microsoft YaHei', sans-serif; text-align: center; padding: 50px; }
+          .error-container { max-width: 600px; margin: 0 auto; }
+          h1 { color: #f56c6c; }
+          p { font-size: 16px; line-height: 1.6; }
+          .retry-btn { 
+            background-color: #409eff; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            margin-top: 20px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="error-container">
+          <h1>旅游规划加载失败</h1>
+          <p>很抱歉，无法加载旅游规划内容。这可能是因为后端服务未启动或网络连接问题。</p>
+          <p>您可以尝试刷新页面或稍后再试。</p>
+          <button class="retry-btn" onclick="window.location.reload()">重试</button>
+        </div>
+      </body>
+      </html>
+      `;
+    }
   }
 } 
